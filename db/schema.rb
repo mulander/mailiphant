@@ -33,7 +33,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_17_152340) do
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["in_reply_to"], name: "index_emails_on_in_reply_to"
   end
 
-  add_foreign_key "emails", "emails", column: "in_reply_to", primary_key: "message_id"
 end
