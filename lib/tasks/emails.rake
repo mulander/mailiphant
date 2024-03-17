@@ -46,7 +46,7 @@ namespace :emails do
           end
         rescue => e
           puts "\n#{e.message}"
-          puts "\nFailed to iconv, verify: #{email.message_id}"
+          puts "\nFailed to iconv, verify: #{message_id}"
           failed += 1
           next
         end
@@ -73,7 +73,14 @@ namespace :emails do
           next
         end
 
-        email.content = charset.iconv(msg.content.first.to_s)
+        begin
+          email.content = charset.iconv(msg.content.first.to_s)
+        rescue => e
+          puts "\n#{e.message}"
+          puts "\nFailed to iconv, verify: #{email.message_id}"
+          failed += 1
+          next
+        end
 
         begin
           email.save!
