@@ -33,14 +33,22 @@ namespace :emails do
           next
         end
 
-        charset = if msg.headers[:content_type]&.charset
-          Iconv.new('UTF-8', msg.headers[:content_type].charset)
-        else
-          Class.new do
-            def iconv(input)
-              input
-            end
-          end.new
+        charset = nil
+        begin
+          charset = if msg.headers[:content_type]&.charset
+            Iconv.new('UTF-8', msg.headers[:content_type].charset)
+          else
+            Class.new do
+              def iconv(input)
+                input
+              end
+            end.new
+          end
+        rescue => e
+          puts "\n#{e.message}"
+          puts "\nFailed to iconv, verify: #{email.message_id}"
+          failed += 1
+          next
         end
 
         email = Email.new
