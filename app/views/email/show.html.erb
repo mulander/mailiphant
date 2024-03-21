@@ -1,0 +1,21 @@
+<h1><%= @email.subject %></h1>
+
+
+<p><b>To:</b> <%= @email.to %></p>
+<p><b>From:</b> <%= @email.from %></p>
+<p><b>Message ID:</b> <%= @email.message_id %></p>
+<p><b>Date:</b> <%= @email.date %></p>
+
+<%= simple_format @email.content %>
+
+<h2>Replies (<%= @email.replies.count %>)</h2>
+
+<ul>
+  <% @email.replies.each do |reply| %>
+    <li>
+      <a href="<%= email_path(reply.message_id) %>">
+        <%= reply.subject %>
+      </a>
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,11 @@
+<h1><%= @month.strftime("%B %-d, %Y") %></h1>
+
+<ul>
+  <% @threads.each do |thread| %>
+    <li>
+      <a href="<%= email_path(thread.message_id) %>">
+        <%= thread.subject %>
+      </a>
+    </li>
+  <% end %>
+</ul>

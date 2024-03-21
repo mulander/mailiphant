@@ -1,0 +1,11 @@
+<h1>Archives#index</h1>
+
+<ul>
+  <% @months.each do |month| %>
+    <li>
+      <a href="<%= archive_path(month) %>">
+        <%= month.strftime("%B %-d, %Y") %>
+      </a>
+    </li>
+  <% end %>
+</ul>
