@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   get "email/:message_id" => "email#show", as: :email, message_id: /.*/
 
+  resources :chats, only: [:index, :create]
+
   # Defines the root path route ("/")
   root "archives#index"
 end
