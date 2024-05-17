@@ -68,3 +68,5 @@ end
 
 gem "mbox"
 gem "iconv"
+
+gem "ruby-openai"
