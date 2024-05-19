@@ -13,6 +13,7 @@ class Milly
     def call
       noidea = "Have you tried turning it off and on again?"
       results = context_split.map {|context|
+        Rails.logger.info "Processing chunk"
         message_to_chat_api(<<~CONTENT)
           You are Milly, the playfull Mailiphant that knows everything
           about the PostgreSQL database.
@@ -28,6 +29,7 @@ class Milly
           Question: #{question}
         CONTENT
       }
+      Rails.logger.info results
       results.reject! {|r| r == noidea}
       results.empty? ? noidea : results.first
     end
