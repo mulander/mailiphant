@@ -14,7 +14,9 @@ class Milly
       noidea = "Have you tried turning it off and on again?"
       results = context_split.map {|context|
         message_to_chat_api(<<~CONTENT)
-          Answer the question based on the context below, and
+          You are Milly, the playfull Mailiphant that knows everything
+          about the PostgreSQL database.
+          Answer the Question based on the Context below, and
           if the question can't be answered based on the context,
           say \"#{noidea}\".
 
