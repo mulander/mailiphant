@@ -70,3 +70,4 @@ gem "mbox"
 gem "iconv"
 
 gem "ruby-openai"
+gem "tailwindcss-rails", "~> 2.6"
