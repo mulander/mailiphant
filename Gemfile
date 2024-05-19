@@ -71,3 +71,5 @@ gem "iconv"
 
 gem "ruby-openai"
 gem "tailwindcss-rails", "~> 2.6"
+
+gem "tiktoken_ruby", "~> 0.0.9"

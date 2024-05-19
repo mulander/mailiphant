@@ -11,18 +11,23 @@ class Milly
     end
 
     def call
-      message_to_chat_api(<<~CONTENT)
-        Answer the question based on the context below, and
-        if the question can't be answered based on the context,
-        say \"Have you tried turning it off and on again?\".
-  
-        Context:
-        #{context}
-  
-        ---
-  
-        Question: #{question}
-      CONTENT
+      noidea = "Have you tried turning it off and on again?"
+      results = context_split.map {|context|
+        message_to_chat_api(<<~CONTENT)
+          Answer the question based on the context below, and
+          if the question can't be answered based on the context,
+          say \"#{noidea}\".
+
+          Context:
+          #{context}
+
+          ---
+
+          Question: #{question}
+        CONTENT
+      }
+      results.reject! {|r| r == noidea}
+      results.empty? ? noidea : results.first
     end
   
     private
@@ -37,9 +42,18 @@ class Milly
   
     def context
         # "To reboot press control + alt + delete"
-        Email.semantic(@question).pluck('context')
+        Email.semantic(@question).pluck('context').first
     end
-  
+
+    def context_split
+      ctx = context
+      enc = Tiktoken.encoding_for_model("gpt-3.5-turbo")
+      len = ctx.size
+      n = 2
+      n *= 2 until ctx.chars.each_slice(len / n).map(&:join).all? {|s| enc.encode(s).length < 3500}
+      ctx.chars.each_slice(len / n).map(&:join)
+    end
+
     def openai_client
       @openai_client ||= OpenAI::Client.new
     end
