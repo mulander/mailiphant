@@ -1,11 +1,16 @@
-<h1><%= @month.strftime("%B %-d, %Y") %></h1>
+<div class="w-full">
 
-<ul>
-  <% @threads.each do |thread| %>
-    <li>
-      <a href="<%= email_path(thread.message_id) %>">
+  <h1><%= @month.strftime("%B %-d, %Y") %></h1>
+
+  <ul class="space-y-2">
+    <% @threads.each do |thread| %>
+
+      <li>
+        <a href="<%= email_path(thread.message_id) %>" class="text-blue-500 hover:underline">
         <%= thread.subject %>
-      </a>
-    </li>
-  <% end %>
-</ul>
+        </a>
+      </li>
+
+    <% end %>
+  </ul>
+</div>

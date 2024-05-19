@@ -1,21 +1,26 @@
-<h1><%= @email.subject %></h1>
+<div class="p-6 bg-white shadow-md rounded-lg">
+  <h1 class="text-2xl font-bold mb-2"><%= @email.subject %></h1>
 
+  <div class="space-y-2">
+    <p><span class="font-semibold">To:</span> <%= @email.to %></p>
+    <p><span class="font-semibold">From:</span> <%= @email.from %></p>
+    <p><span class="font-semibold">Message ID:</span> <%= @email.message_id %></p>
+    <p><span class="font-semibold">Date:</span> <%= @email.date %></p>
+  </div>
 
-<p><b>To:</b> <%= @email.to %></p>
-<p><b>From:</b> <%= @email.from %></p>
-<p><b>Message ID:</b> <%= @email.message_id %></p>
-<p><b>Date:</b> <%= @email.date %></p>
+  <div class="mt-4 border-t border-gray-200 pt-4">
+    <%= simple_format @email.content %>
+  </div>
 
-<%= simple_format @email.content %>
+  <h2 class="mt-6 text-xl font-bold">Replies (<%= @email.replies.count %>)</h2>
 
-<h2>Replies (<%= @email.replies.count %>)</h2>
-
-<ul>
-  <% @email.replies.each do |reply| %>
-    <li>
-      <a href="<%= email_path(reply.message_id) %>">
-        <%= reply.subject %>
-      </a>
-    </li>
-  <% end %>
-</ul>
+  <ul class="list-disc pl-5 mt-2 space-y-1">
+    <% @email.replies.each do |reply| %>
+      <li>
+        <a href="<%= email_path(reply.message_id) %>" class="text-blue-500 hover:underline">
+          <%= reply.subject %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>

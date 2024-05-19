@@ -1,11 +1,16 @@
-<h1>Archives#index</h1>
+<div class="w-full">
 
-<ul>
-  <% @months.each do |month| %>
-    <li>
-      <a href="<%= archive_path(month) %>">
-        <%= month.strftime("%B %-d, %Y") %>
-      </a>
-    </li>
-  <% end %>
-</ul>
+  <div class="grid grid-cols-3 gap-4">
+    <% @months.each do |month, count| %>
+      <div class="bg-blue-500 text-white p-4 rounded">
+        <h2 class="font-bold text-xl">
+          <a href="<%= archive_path(month) %>">
+            <%= month.strftime("%B %-d, %Y") %>
+          </a>
+        </h2>
+        <p><%= count %></p>
+      </div>
+    <% end %>
+  </div>
+
+</div>

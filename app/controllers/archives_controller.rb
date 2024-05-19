@@ -4,7 +4,7 @@ class ArchivesController < ApplicationController
       .where(in_reply_to: nil)
       .group("date_trunc('month', date)")
       .order(1)
-      .pluck(Arel.sql("date_trunc('month', date)"))
+      .pluck(Arel.sql("date_trunc('month', date), count(*)"))
   end
 
   def show
