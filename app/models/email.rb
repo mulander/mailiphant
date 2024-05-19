@@ -26,4 +26,15 @@ class Email < ApplicationRecord
         ActiveRecord::Base.connection.exec_query(
             ActiveRecord::Base.send(:sanitize_sql_array, [sql, query: query]))
     end
+
+    def self.summarize(context)
+        sql =
+        <<-SQL
+            SELECT azure_cognitive.summarize_abstractive(:context,'en', sentence_count := 20) as context;
+        SQL
+        sql.chomp
+        ActiveRecord::Base.connection.exec_query(
+            ActiveRecord::Base.send(:sanitize_sql_array, [sql, context: context]))
+    end
+
 end
