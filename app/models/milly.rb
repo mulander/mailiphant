@@ -36,7 +36,8 @@ class Milly
     end
   
     def context
-        "To reboot press control + alt + delete"
+        # "To reboot press control + alt + delete"
+        Email.semantic(@question).pluck('context')
     end
   
     def openai_client
