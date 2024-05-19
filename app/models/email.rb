@@ -11,6 +11,7 @@ class Email < ApplicationRecord
                 WHERE message_id IN (
                         SELECT message_id
                             FROM emails
+                         WHERE date >= '2020-01-01' -- Optional date limitation
                     ORDER BY email_embedding <#> azure_openai.create_embeddings('text-embedding-ada-002'
                     , :query)::vector
                     LIMIT 5
