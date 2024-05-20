@@ -11,9 +11,12 @@ class Milly
     end
 
     def call
+      # When we don't know:
       noidea = "Have you tried turning it off and on again?"
+      # Repeat the RAG pattern in chunks that fit our token limit
       results = context_split.map {|context|
         Rails.logger.info "Processing chunk"
+        # Build the prompt
         message_to_chat_api(<<~CONTENT)
           You are Milly, the playfull Mailiphant that knows everything
           about the PostgreSQL database.
@@ -30,7 +33,9 @@ class Milly
         CONTENT
       }
       Rails.logger.info results
+      # Throw away noideas
       results.reject! {|r| r == noidea}
+      # Return what we found or noidea
       results.empty? ? noidea : results.first
     end
   
